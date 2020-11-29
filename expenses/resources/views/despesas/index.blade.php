@@ -12,38 +12,35 @@
             </form>
     
             @if($despesas->count())
+            
                 @foreach ($despesas as $despesa)
 
-                    @if($despesa->user_id === auth()->id())
+                    <div class="mb-4 p-4 border-2 w-full ">
 
-                        <div class="mb-4 p-4 border-2 w-full ">
+                        <div class="flex justify-between">
 
-                            <div class="flex justify-between">
+                            <span class="font-bold mb-2">{{$despesa->title}}</span>
+                            <span class="text-gray-600 text-sm mb-2">{{$despesa->date}}</span>
+                        </div>
 
-                                <span class="font-bold mb-2">{{$despesa->title}}</span>
-                                <span class="text-gray-600 text-sm mb-2">{{$despesa->date}}</span>
-                            </div>
+                        <p class="text-red-400 text-sm mb-2">R${{$despesa->value}}</p>
 
-                            <p class="text-red-400 text-sm mb-2">R${{$despesa->value}}</p>
+                        <div class="flex justify-between">
 
-                            <div class="flex justify-between">
+                            <form action="{{route('deletar.despesa', $despesa)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500">Deletar</button>
+                            </form>
 
-                                <form action="{{route('deletar.despesa', $despesa)}}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500">Deletar</button>
-                                </form>
-
-                                <form action="{{route('ver.despesa', $despesa)}}" method="get">
-                                    @csrf
-                                    <button type="submit" class="text-blue-800">+ detalhes</button>
-                                </form>
-
-                            </div>
-
+                            <form action="{{route('ver.despesa', $despesa)}}" method="get">
+                                @csrf
+                                <button type="submit" class="text-blue-800">+ detalhes</button>
+                            </form>
 
                         </div>
-                    @endif
+
+                    </div>
 
                 @endforeach
 

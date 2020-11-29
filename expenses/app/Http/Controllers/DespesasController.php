@@ -15,7 +15,7 @@ class DespesasController extends Controller
 
     public function index()
     {    
-        $despesas = Despesa::get();
+        $despesas = Despesa::where('user_id', auth()->user()->id)->latest('date')->get();
         return view('despesas.index', [
             'despesas' => $despesas
         ]);
