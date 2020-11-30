@@ -8,15 +8,15 @@
 
                 <div class="flex justify-between mb-5 text-lg">
                     <span class="font-bold">{{$despesa->title}}</span>
-                    <span class="text-gray-600">{{$despesa->date}}</span>
+                    <span class="text-gray-600">{{\Carbon\Carbon::parse($despesa->date)->format('d/m/Y')}}</span>
                 </div>
 
                 <p class="mb-4">{{$despesa->description}}</p>
-                <p class="text-red-400 mb-6">R${{$despesa->value}}</p>
+                <p class="text-red-400 mb-6">R${{number_format($despesa->value, 2, ',', '.')}}</p>
 
                 <p class="text-lg flex justify-center">Nota fiscal:</p>
 
-                <img src="{{asset('storage/'.$despesa->receipt)}}" alt="Nota Fiscal" class="w-8/12
+                <img src="{{asset($despesa->receipt)}}" alt="Nota Fiscal" class="w-8/12
                 flex justify-center">
                 
                 <div class="flex justify-between">
@@ -27,10 +27,7 @@
                         <button type="submit" class="text-red-500">Deletar</button>
                     </form>
 
-                    <form action="{{route('editar.despesa', $despesa)}}" method="get">
-                        @csrf
-                        <button type="submit" class="text-blue-800">Editar</button>
-                    </form>
+                    <a href="{{route('editar.despesa', $despesa)}}" class="text-blue-800">Editar</a>
 
                 </div>
 

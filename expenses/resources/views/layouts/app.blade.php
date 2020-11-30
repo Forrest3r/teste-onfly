@@ -6,7 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Controle de Despesas</title>
 
-<link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+
+    <script type="text/javascript" src="{{asset('js/jquery-3.5.1.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jquery.mask.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/jquery-ui.min.js')}}"></script>
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+
 </head>
 <body class="bg-gray-200">
 

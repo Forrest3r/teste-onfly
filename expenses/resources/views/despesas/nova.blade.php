@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <script>
+        $(document).ready(function(){
+            $('#date').mask('00/00/0000');
+            $( "#date" ).datepicker({
+                showButtonPanel:true,
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                nextText: 'Próximo',
+                prevText: 'Anterior'
+            });
+
+            $('#value').mask('000.000.000.000.000,00', {reverse: true});            
+        })
+    </script>
+
     <div class="flex justify-center">
 
        <div class="w-8/12 bg-white p-6 rounded-lg">
@@ -36,7 +56,7 @@
 
                <div class="mb-4">
                    <label for="date" class="sr-only">Data</label>
-                   <input type="date" name="date" id="date" placeholder="Data"
+                   <input type="text" name="date" id="date" placeholder="Data"
                    class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('date')
                    border-red-500 @enderror" value="{{ old('date') }}" autocomplete="off">
 
@@ -49,11 +69,11 @@
 
                <div class="mb-4">
                    <label for="value" class="sr-only">Valor</label>
-                   <input type="number" name="value" id="value" placeholder="Valor"
+                   <input type="text" name="value" id="value" placeholder="Valor (R$)"
                    class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('value')
-                   border-red-500 @enderror" value="{{ old('value') }}" step="0.01" autocomplete="off">
+                   border-red-500 @enderror" value="{{ old('value') }}" autocomplete="off">
 
-                   @error('date')
+                   @error('value')
                        <div class="text-red-500 mt-2 text-sm">
                            {{$message}}
                        </div>

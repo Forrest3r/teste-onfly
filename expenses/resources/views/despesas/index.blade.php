@@ -12,7 +12,7 @@
             </form>
     
             @if($despesas->count())
-            
+
                 @foreach ($despesas as $despesa)
 
                     <div class="mb-4 p-4 border-2 w-full ">
@@ -20,10 +20,10 @@
                         <div class="flex justify-between">
 
                             <span class="font-bold mb-2">{{$despesa->title}}</span>
-                            <span class="text-gray-600 text-sm mb-2">{{$despesa->date}}</span>
+                            <span class="text-gray-600 text-sm mb-2">{{\Carbon\Carbon::parse($despesa->date)->format('d/m/Y')}}</span>
                         </div>
 
-                        <p class="text-red-400 text-sm mb-2">R${{$despesa->value}}</p>
+                        <p class="text-red-400 text-sm mb-2">R${{number_format($despesa->value, 2, ',', '.')}}</p>
 
                         <div class="flex justify-between">
 
@@ -32,11 +32,8 @@
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500">Deletar</button>
                             </form>
-
-                            <form action="{{route('ver.despesa', $despesa)}}" method="get">
-                                @csrf
-                                <button type="submit" class="text-blue-800">+ detalhes</button>
-                            </form>
+                        
+                            <a href="{{route('ver.despesa', $despesa)}}" class="text-blue-800">+ detalhes</a>
 
                         </div>
 

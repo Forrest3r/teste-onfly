@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <script>
+        $(document).ready(function(){
+            $('#date').mask('00/00/0000');
+            $( "#date" ).datepicker({
+                showButtonPanel:true,
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                nextText: 'Próximo',
+                prevText: 'Anterior'
+            });
+
+            $('#value').mask('000.000.000.000.000,00', {reverse: true});            
+        })
+    </script>
+
     <div class="flex justify-center">
 
        <div class="w-8/12 bg-white p-6 rounded-lg">
@@ -37,7 +57,7 @@
 
                     <div class="mb-4">
                         <label for="date" class="sr-only">Data</label>
-                        <input type="date" name="date" id="date" placeholder="Data"
+                        <input type="text" name="date" id="date" placeholder="Data"
                         class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('date')
                         border-red-500 @enderror" value="{{ $despesa->date }}" autocomplete="off">
 

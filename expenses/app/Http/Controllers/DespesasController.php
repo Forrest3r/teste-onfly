@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use NumberFormatter;
 use App\Models\Despesa;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DespesasController extends Controller
 {
@@ -47,7 +50,7 @@ class DespesasController extends Controller
             'title' => ['required', 'between:1,255'],
             'description' => ['required', 'between:1,65.535'],
             'date' => ['required'],
-            'value' => ['required', 'numeric'],
+            'value' => ['required'],
             'receipt' => ['required'],
         ]);
 
@@ -72,16 +75,25 @@ class DespesasController extends Controller
             'title' => ['required', 'between:1,255'],
             'description' => ['required', 'between:1,65.535'],
             'date' => ['required'],
-            'value' => ['required', 'numeric'],
+            'value' => ['required'],
             'receipt' => ['required', 'file', 'max:8000'],
         ]);
+
+        //Converter formatos
+        $convertedDate = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
+        //$convertedValue = NumberFormatter::parseCurrency($request->value, 'pt_B');
+        //$numberFormatter = new NumberFormatter('pt-BR',NumberFormatter::CURRENCY);
+        //$format = 'pt_b';
+        //$convertedValue = numfmt_parse_currency ($numberFormatter , $request->value , $format);
+        $convertedValue = str_replace(".", "", $request->value);
+        $convertedValue = floatval(str_replace(",", ".", $convertedValue));
 
         //armazenar no bando de dados
         $request->user()->despesas()->create([
             'title' => $request->title,
             'description' => $request->description,
-            'date' => $request->date,
-            'value' => $request->value,
+            'date' => $convertedDate,
+            'value' => $convertedValue,
             'receipt' => request('receipt')->store('receipts'),
         ]);
         
@@ -91,6 +103,7 @@ class DespesasController extends Controller
 
     public function destroy(Despesa $despesa)
     {
+        Storage::delete($despesa->receipt);
         $despesa->delete();
         return redirect()->route('despesas');
     }
