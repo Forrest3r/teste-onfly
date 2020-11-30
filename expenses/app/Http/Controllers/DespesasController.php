@@ -53,15 +53,23 @@ class DespesasController extends Controller
             'value' => ['required'],
             'receipt' => ['required'],
         ]);
+		
+		//Converter data e valor
+        $convertedDate = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
+		
+        $convertedValue = str_replace(".", "", $request->value);
+        $convertedValue = floatval(str_replace(",", ".", $convertedValue));
 
         $despesa = Despesa::findOrFail($id);
+
+        Storage::delete($despesa->receipt);
             
         //armazenar no bando de dados
         $despesa->update([
             'title' => $request->title,
             'description' => $request->description,
-            'date' => $request->date,
-            'value' => $request->value,
+            'date' => $convertedDate,
+            'value' => $convertedValue,
             'receipt' => request('receipt')->store('receipts'),
         ]);
 
@@ -79,12 +87,9 @@ class DespesasController extends Controller
             'receipt' => ['required', 'file', 'max:8000'],
         ]);
 
-        //Converter formatos
+        //Converter data e valor
         $convertedDate = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
-        //$convertedValue = NumberFormatter::parseCurrency($request->value, 'pt_B');
-        //$numberFormatter = new NumberFormatter('pt-BR',NumberFormatter::CURRENCY);
-        //$format = 'pt_b';
-        //$convertedValue = numfmt_parse_currency ($numberFormatter , $request->value , $format);
+		
         $convertedValue = str_replace(".", "", $request->value);
         $convertedValue = floatval(str_replace(",", ".", $convertedValue));
 

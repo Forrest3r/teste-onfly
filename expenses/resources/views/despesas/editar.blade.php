@@ -59,7 +59,7 @@
                         <label for="date" class="sr-only">Data</label>
                         <input type="text" name="date" id="date" placeholder="Data"
                         class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('date')
-                        border-red-500 @enderror" value="{{ $despesa->date }}" autocomplete="off">
+                        border-red-500 @enderror" value="{{\Carbon\Carbon::parse($despesa->date)->format('d/m/Y')}}" autocomplete="off">
 
                         @error('date')
                             <div class="text-red-500 mt-2 text-sm">
@@ -70,11 +70,11 @@
 
                     <div class="mb-4">
                         <label for="value" class="sr-only">Valor</label>
-                        <input type="number" name="value" id="value" placeholder="Valor"
+                        <input type="text" name="value" id="value" placeholder="Valor (R$)"
                         class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('value')
                         border-red-500 @enderror" value="{{ $despesa->value }}" step="0.01" autocomplete="off">
 
-                        @error('date')
+                        @error('value')
                             <div class="text-red-500 mt-2 text-sm">
                                 {{$message}}
                             </div>
