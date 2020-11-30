@@ -1,5 +1,3 @@
 Olá!
-Ao testar a aplicação, percebi que ao deletar uma despesa, sua imagem não é deletada, de forma que imagens vão se acumulando na pasta.
-Não consegui resolver este problema, visto que é a primeira vez que tenho contato com php e Laravel, mas gostaria de aprender durante
-o feedback.
- Mais uma vez, muito obrigado pela oportunidade!
+Estou tendo dificuldade ao exibir as notas fiscais. Elas não são exibidas mesmo com o caminho correto.
+Mais uma vez, muito obrigado pela oportunidade!
